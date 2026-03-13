@@ -1,9 +1,9 @@
 // js/exercises/index.js
-import { runBuildBlocks } from "./buildblocks.js";
+import { runbuildBlocks } from "./buildblocks.js";
 import { runSwapIt } from "./swapIt.js";
 
 export const exerciseRegistry = {
-  buildBlocks: runBuildBlocks,
+  buildblocks: runBuildblocks,
   swapIt: runSwapIt
 };
 
