@@ -1,0 +1,464 @@
+@font-face {
+  font-family: 'Acumin Variable Concept';
+  src: url('fonts/font.woff2') format('woff2');
+  font-weight: normal; /* Ou 400, bold, etc. */
+  font-style: normal;  /* Ou italic */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Acumin Variable Concept", sans-serif;
+  background: gainsboro;
+}
+
+#app, #state-container {
+  height: 100%;
+}
+
+/* Garante que o container principal nunca passe da tela */
+#state-container {
+    width: 100svw;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullscreen {
+    width: 100svw;
+    height: 100svh;
+    height: calc(var(--vh, 1vh) * 100);
+    position: relative;
+    object-fit: contain;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-primary {
+    font-family: "Acumin Variable Concept", sans-serif;
+    font-size: clamp(32px, 6vw, 80px);
+    font-weight: bold;
+    color: midnightblue;
+    margin: 2px 0;
+    line-height: 1;
+}
+
+.text-dialogue {
+    font-family: "Acumin Variable Concept", sans-serif;
+    /* clamp(mínimo, ideal_adaptativo, máximo) */
+    font-size: clamp(24px, 4vw, 48px); 
+    font-weight: bold;
+    color: midnightblue;
+    text-align: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    line-height: 1.2;
+    max-height: 25svh; /* Limita a altura para evitar overflow */
+    overflow: hidden;
+}
+
+.text-secondary {
+    font-family: "Acumin Variable Concept", sans-serif;
+    font-size: clamp(18px, 3.5vw, 40px);
+    font-style: italic;
+    color: midnightblue;
+    margin: 2px 0;
+    line-height: 1;
+}
+
+.check-image {
+    width: 40vmin;
+    height: 40vmin;
+    object-fit: contain;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+
+/* Command icons container */
+.cmd-bar{
+  display: flex;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 38px);
+  margin-top: clamp(6px, 2vh, 10px);
+  margin-bottom: 1.5vh;
+}
+
+/* Icons: subtle baseline, monochrome-friendly */
+.cmd-icon{
+  width: clamp(56px, 7vw, 96px);
+  height: clamp(56px, 7vw, 96px);
+  opacity: 0.28;
+  transform: scale(1);
+  transition: opacity 320ms ease-in-out, transform 320ms ease-in-out, filter 320ms ease-in-out;
+}
+
+/* Active state: gentle emphasis (no noise) */
+.cmd-icon.active{
+  opacity: 1;
+  transform: scale(1.04);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.14));
+}
+
+.success {
+    background-color: rgba(34,139,34,0.3);
+}
+
+.error {
+    background-color: rgba(220,20,60,0.3);
+}
+
+.hidden {
+    display: none;
+}
+
+.start-button {
+    padding: 20px 50px;
+    background-color: rgba(70, 130, 180, 0.5); /* Cor 4682B4 com 50% opacity */
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.3s ease;
+}
+
+.start-button:hover {
+    background-color: rgba(70, 130, 180, 0.8);
+}
+
+.vocab-layout {
+    display: flex;
+    width:100vw;
+    height: 100dvh;
+    height: 100vh;
+    overflow: hidden;
+
+}
+
+.area1, .area2 {
+  min-height: 0;
+}
+
+.area1 {
+  width: 31.6%;
+  height: 100%;
+  background-color: #6082B6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* Evita que o conteúdo fique atrás do notch/gestos */
+  box-sizing: border-box;
+}
+
+.area2 {
+  width: 68.4%;
+  height: 100%;
+  position: relative;
+  background: transparent;
+  overflow: hidden; /* ajuda a não “estourar” */
+}
+
+
+/* Itens do Menu Lateral */
+.menu-item {
+  color: white;
+  font-size: clamp(18px, 4vw, 42px);
+  font-family: "Acumin Variable Concept", sans-serif;
+  margin: 1vh 0;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+    opacity: 0.7;
+}
+
+/* Vídeo na Area 1 */
+.vocab-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 600px) {
+  .vocab-layout { flex-direction: column; }
+  .area1 { width: 100%; height: 30%; }
+  .area2 { width: 100%; height: 70%; }
+  .menu-item { font-size: clamp(16px, 5vw, 28px); }
+}
+
+.warn-img {
+    width: auto;         /* Mantém a proporção */
+    max-width: 80vw;     /* No máximo 80% da largura da tela */
+    max-height: 80vh;    /* No máximo 80% da altura da tela */
+    object-fit: contain;
+    border-radius: 20px; /* Mantendo seu padrão de bordas arredondadas */
+}
+
+/* Ajuste preventivo para qualquer imagem dentro de containers centralizados */
+.centered img {
+    max-width: 90vw;
+    height: auto;
+}
+
+.vocab-image {
+    max-height: 45vh !important; /* Força a imagem a ocupar menos da metade da altura */
+    width: auto;
+    max-width: 80%;
+    object-fit: contain;
+    border-radius: 20px;
+    flex-shrink: 1; /* Permite que a imagem encolha se o botão precisar de espaço */
+}
+
+/* ==============================
+   ECUBE — BACKGROUNDS via CSS
+   (sem imagens, sem sombra)
+   ============================== */
+
+/* Fundo azul 30% */
+.bg-blue-30 {
+  background: rgba(0, 113, 188, 0.30);
+}
+
+/* Painel branco 50% */
+.panel-white-50 {
+  background: rgba(255, 255, 255, 0.50);
+  border-radius: 20px; /* bem arredondado, como referência */
+}
+
+/* Palco central */
+.stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cartão principal (painel branco grande) */
+.stage-card {
+  position: relative;
+  width: 92%;
+  height: 90%;
+  padding: clamp(18px, 3vw, 52px);
+  box-sizing: border-box;
+}
+
+/* ---------- VOCAB (area2) ---------- */
+.vocab-card {
+  width: 100%;
+  height: 100%;
+  min-height: 0; /* MUITO importante em flex mobile */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Área de navegação com ícones (prev/next) */
+.vocab-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(14px, 3vh, 28px);
+  display: flex;
+  justify-content: space-between;   /* EXTREMIDADES */
+  align-items: center;
+  padding: 0 clamp(22px, 5vw, 80px); /* “margem interna” */
+}
+
+.nav-icon {
+  width: clamp(60px, 9vw, 120px);
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-icon.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ---------- CHECKS (CK1/CK2/CK3) ---------- */
+.check-card {
+  width: min(92vw, 1700px);
+  height: min(86vh, 920px);
+  padding: clamp(18px, 3vw, 52px);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(18px, 3vh, 44px);
+}
+
+/* CK1 layout: imagem grande + 3 opções empilhadas à direita */
+.ck1-row {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(18px, 4vw, 80px);
+  align-items: center;
+}
+
+/* imagem do CK1 centralizada na coluna esquerda */
+.ck1-imgwrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* opções do CK1 */
+.ck1-options {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 38px);
+  width: 100%;
+  align-items: stretch;
+}
+
+/* “Pill” das opções (como no mock) */
+.opt-pill {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 22px;
+  padding: clamp(16px, 2.2vh, 24px) clamp(18px, 3vw, 36px);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* CK2: título em cima + imagens embaixo */
+.ck2-title {
+  margin-top: 6px;
+}
+
+.ck2-images {
+  display: flex;
+  gap: clamp(18px, 4vw, 90px);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+/* CK3: ícone áudio em cima + imagens embaixo */
+.ck3-audio {
+  width: clamp(72px, 9vw, 140px);
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ajuste: imagens de check responsivas e consistentes */
+.check-image {
+  width: min(32vmin, 320px);
+  height: min(32vmin, 320px);
+  object-fit: cover;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* CK1 imagem um pouco maior */
+.ck1-main-image {
+  width: min(44vmin, 460px);
+  height: min(44vmin, 460px);
+  object-fit: cover;
+  border-radius: 32px;
+}
+
+/* Mobile: empilha CK1 (imagem em cima, opções embaixo) */
+@media (max-width: 700px) {
+  .ck1-row {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 22px;
+  }
+  .ck2-images {
+    gap: 18px;
+  }
+}
+
+.mini-dialog {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto; /* imagens crescem, legenda fica embaixo */
+  align-items: center;
+  justify-items: center;
+  gap: clamp(10px, 2vh, 24px);
+  padding: clamp(12px, 2vh, 28px);
+  padding-bottom: clamp(18px, 4vh, 60px); /* mais espaço no rodapé */
+  box-sizing: border-box;
+}
+
+.mini-dialog-images {
+  display: flex;
+  width: clamp(140px, 18vw, 360px);
+  height: auto;
+  gap: clamp(18px, 4vw, 60px);
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-dialog-images img{
+  width: clamp(140px, 18vw, 360px);
+  height: auto;
+}
+
+.exercise-nav{
+  position: relative !important;
+  justify-content: center !important;
+  margin-top: auto;                 /* empurra para o fundo do painel */
+  padding: 0 clamp(32px, 7vw, 120px) !important; /* mais “margem interna” horizontal */
+  gap: clamp(100px, 40vw, 700px) !important; /* espaçamento entre os ícones */
+}
+
+@media (max-width: 700px){
+  .exercise-card button{
+    padding: 8px 10px !important;
+    font-size: clamp(14px, 3.6vw, 22px) !important;
+  }
+}
+
+/* Conteúdo escalável (chunks + frames) */
+.exercise-content{
+  transform-origin: top center;
+}
+
+@media (max-width: 600px) {
+  /* Aumenta o espaço para o usuário clicar nos botões */
+  .exercise-content {
+    padding-top: clamp(12px, 3vh, 24px) !important;
+    padding-bottom: clamp(12px, 3vh, 24px) !important;
+    gap: 5px;
+    transform: none !important; /* Em telas muito estreitas, escala as vezes piora a leitura */
+  }
+
+  /* Faz com que cada botão tenha um tamanho mínimo confortável */
+  .btn1 {
+    flex: 1 1 auto; /* Permite que botões cresçam para preencher a linha se quiser um visual uniforme */
+    min-width: 120px; 
+  }
+
+  /* Ajusta a barra de comandos para não ocupar tanto espaço */
+  .cmd-bar {
+    gap: 15px;
+  }
+}

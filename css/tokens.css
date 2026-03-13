@@ -1,0 +1,94 @@
+/* =========================================
+   ECUBE DESIGN TOKENS
+   ========================================= */
+
+:root {
+
+  /* =========================================
+     COLORS
+     ========================================= */
+
+  /* Brand */
+  --color-primary: rgb(58, 89, 153);
+  --color-primary-30: rgba(58, 89, 153, 0.30);
+  --color-primary-10: rgba(58, 89, 153, 0.10);
+
+  /* Neutral */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-bg: gainsboro;
+
+  /* Text */
+  --text-primary: #222222;
+  --text-secondary: #555555;
+  --text-on-primary: #ffffff;
+
+  /* Feedback */
+  --color-success: #2ecc71;
+  --color-warning: #f39c12;
+  --color-error: #e74c3c;
+
+  /* =========================================
+     OPACITY LEVELS
+     ========================================= */
+
+  --opacity-disabled: 0.3;
+  --opacity-idle: 0.4;
+  --opacity-active: 1;
+
+  /* =========================================
+     BORDER RADIUS
+     ========================================= */
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* =========================================
+     SHADOWS
+     ========================================= */
+
+  --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.18);
+
+  /* =========================================
+     SPACING SCALE
+     ========================================= */
+
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* =========================================
+     TRANSITIONS
+     ========================================= */
+
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* =========================================
+     FONT SCALE
+     ========================================= */
+
+  --font-xs: clamp(12px, 2vh, 14px);
+  --font-sm: clamp(14px, 2.5vh, 16px);
+  --font-md: clamp(16px, 3vh, 20px);
+  --font-lg: clamp(20px, 4vh, 28px);
+  --font-xl: clamp(28px, 6vh, 48px);
+
+  /* =========================================
+     LAYOUT
+     ========================================= */
+
+  --app-max-width: 1200px;
+  --panel-width: min(90vw, 900px);
+  --panel-height: min(85vh, 700px);
+
+}

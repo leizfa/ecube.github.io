@@ -1,0 +1,224 @@
+/* =========================================
+   ECUBE — COMPONENTS
+   (Reutilizáveis: botões, painéis, chips, ícones)
+   Carregue antes do style.css para não quebrar nada.
+   ========================================= */
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: clamp(10px, 2vh, 16px) clamp(12px, 3vw, 20px);
+  font-size: clamp(14px, 4vw, 18px);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+  transition: transform var(--transition-fast), opacity var(--transition-fast), background var(--transition-fast);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled,
+.btn.is-disabled {
+  opacity: var(--opacity-disabled);
+  pointer-events: none;
+}
+
+/* Primary button (matches your rgb 58,89,153) */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+}
+
+/* Soft primary (good for “Start” style) */
+.btn-primary-soft {
+  background: rgba(70, 130, 180, 0.5); /* mantém sua estética atual */
+  color: var(--text-on-primary);
+}
+
+.btn-primary-soft:hover {
+  background: rgba(70, 130, 180, 0.8);
+}
+
+/* Text button (optional) */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid rgba(58, 89, 153, 0.25);
+}
+
+/* ---------- Panels / Cards ---------- */
+
+.panel {
+  border-radius: 20px; /* mantemos seu padrão atual */
+  box-sizing: border-box;
+}
+
+.panel-white-50 {
+  background: rgba(255, 255, 255, 0.50);
+  border-radius: 20px;
+}
+
+/* Stage backgrounds */
+.bg-blue-30 {
+  background: rgba(0, 113, 188, 0.30);
+}
+
+/* Stage container (centering helper) */
+.stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* “Card” inside the stage (your stage-card) */
+.stage-card {
+  width: 92%;
+  height: 90%;
+  padding: clamp(18px, 3vw, 52px);
+  box-sizing: border-box;
+}
+
+/* ---------- Text chips / options ---------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  border-radius: 22px;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+/* Your CK1 option pill style */
+.opt-pill {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 22px;
+  padding: clamp(16px, 2.2vh, 24px) clamp(18px, 3vw, 36px);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ECUBE “btn1” requested: rgb(58,89,153) + white bold + radius 8 */
+.btn1 {
+  background: rgb(58, 89, 153);
+  color: white;
+  font-weight: 800;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  text-align: center;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn1:active {
+  transform: scale(0.99);
+}
+
+.btn1.is-disabled,
+.btn1:disabled {
+  opacity: var(--opacity-disabled);
+  pointer-events: none;
+}
+
+/* If you use divs as buttons (common in your code) */
+.btn-like {
+  user-select: none;
+  cursor: pointer;
+}
+
+/* ---------- Command Icons (listen/speak) ---------- */
+
+.cmd-bar {
+  display: flex;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 38px);
+  margin-top: clamp(6px, 2vh, 10px);
+  margin-bottom: 1.5vh;
+}
+
+.cmd-icon {
+  width: clamp(56px, 7vw, 96px);
+  height: clamp(56px, 7vw, 96px);
+  opacity: 0.28;
+  transform: scale(1);
+  transition: opacity 320ms ease-in-out, transform 320ms ease-in-out, filter 320ms ease-in-out;
+}
+
+.cmd-icon.active {
+  opacity: 1;
+  transform: scale(1.04);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.14));
+}
+
+/* ---------- Navigation Icons (prev/next) ---------- */
+
+.nav-icon {
+  width: clamp(60px, 9vw, 120px);
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-icon.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ---------- Images ---------- */
+
+.img-contain {
+  object-fit: contain;
+}
+
+.img-cover {
+  object-fit: cover;
+}
+
+.warn-img {
+  width: auto;
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* ---------- Visibility / feedback helpers ---------- */
+
+.hidden {
+  display: none !important;
+}
+
+.success {
+  background-color: rgba(34,139,34,0.3);
+}
+
+.error {
+  background-color: rgba(220,20,60,0.3);
+}
+
+/* ---------- Accessibility / motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .cmd-icon,
+  .btn1 {
+    transition: none !important;
+  }
+}

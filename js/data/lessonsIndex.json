@@ -1,0 +1,32 @@
+{
+  "lessons": [
+    {
+      "id": "lesson01",
+      "module": "foundations",
+      "title": "Lesson 01",
+      "path": "/js/lessons/foundations/lesson01.js",
+      "enabled": true
+    },
+    {
+      "id": "lesson02",
+      "module": "foundations",
+      "title": "Lesson 02",
+      "path": "/js/lessons/foundations/lesson02.js",
+      "enabled": true
+    },
+    {
+      "id": "lesson03",
+      "module": "foundations",
+      "title": "Lesson 03",
+      "path": "./js/lessons/foundations/lesson03.js",
+      "enabled": true
+    },
+    {
+      "id": "lesson04",
+      "module": "foundations",
+      "title": "Lesson 04",
+      "path": "./js/lessons/foundations/lesson04.js",
+      "enabled": true
+    }
+  ]
+}
