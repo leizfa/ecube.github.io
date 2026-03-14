@@ -4,14 +4,14 @@
       "id": "lesson01",
       "module": "foundations",
       "title": "Lesson 01",
-      "path": "/js/lessons/foundations/lesson01.js",
+      "path": "./js/lessons/foundations/lesson01.js",
       "enabled": true
     },
     {
       "id": "lesson02",
       "module": "foundations",
       "title": "Lesson 02",
-      "path": "/js/lessons/foundations/lesson02.js",
+      "path": "./js/lessons/foundations/lesson02.js",
       "enabled": true
     },
     {
