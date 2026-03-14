@@ -134,7 +134,9 @@ async function safeFetchJson(path) {
 
 async function importLesson(path) {
   try {
-    const mod = await import(path);
+    // Ensure the path is treated as a relative path by the browser
+    const normalizedPath = path.startsWith('./') ? path : `./${path}`;
+    const mod = await import(normalizedPath);
     return mod.lesson || mod.default || null;
   } catch (e) {
     console.error("Lesson import error:", e);
