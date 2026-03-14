@@ -11,7 +11,7 @@
       "id": "lesson02",
       "module": "foundations",
       "title": "Lesson 02",
-      "path": "./js/lessons/foundations/lesson02.js",
+      "path": "./lessons/foundations/lesson02.js",
       "enabled": true
     },
     {
