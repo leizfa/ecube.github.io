@@ -1,6 +1,5 @@
 const CACHE_NAME = "ecube-v1";
 const APP_SHELL = [
-  "/",
   "./index.html",
   "./manifest.webmanifest",
   "./css/style.css",
