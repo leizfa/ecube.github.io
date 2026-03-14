@@ -155,8 +155,9 @@ function installVHFix() {
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
-      await navigator.serviceWorker.register("./sw.js");
-      console.log("Service Worker registrado com sucesso.");
+      // The second argument { scope: './' } is the key here
+      await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+      console.log("Service Worker registrado com escopo relativo.");
     } catch (err) {
       console.error("Falha ao registrar Service Worker:", err);
     }
