@@ -1,4 +1,5 @@
 // js/exercises/swapIt.js
+
 import { VideoController } from "../core/video.js";
 import { icon } from "../core/assets.js";
 import { Catalog } from "../core/catalog.js";
@@ -28,22 +29,38 @@ export async function runSwapIt(container, data, nav = {}) {
   const catalog = new Catalog();
   await catalog.load("js/data/vocabCatalog.json");
 
+  container.innerHTML = "";
+  container.className = "exercise-root exercise-swapit";
+
+  // ----------------------------
+  // helpers
+  // ----------------------------
+
   function cleanup() {
     destroyed = true;
-    try { vc.cancel(); } catch {}
+    try {
+      vc.cancel();
+    } catch {}
+
+    window.removeEventListener("resize", updateOrientationState);
+    window.removeEventListener("orientationchange", updateOrientationState);
+
     container.innerHTML = "";
+    container.className = "";
   }
 
   function setCmdState(cmdListenEl, cmdSpeakEl, which) {
     if (!cmdListenEl || !cmdSpeakEl) return;
+
     cmdListenEl.classList.remove("active");
     cmdSpeakEl.classList.remove("active");
+
     if (which === "listen") cmdListenEl.classList.add("active");
     if (which === "speak") cmdSpeakEl.classList.add("active");
   }
 
   function wait(ms) {
-    return new Promise((res) => setTimeout(res, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   async function playAudioOnly(audioSrc) {
@@ -52,10 +69,10 @@ export async function runSwapIt(container, data, nav = {}) {
     const start = performance.now();
 
     await new Promise((resolve) => {
-      const a = new Audio(audioSrc);
-      a.onended = () => resolve();
-      a.onerror = () => resolve();
-      a.play().catch(() => resolve());
+      const audio = new Audio(audioSrc);
+      audio.onended = () => resolve();
+      audio.onerror = () => resolve();
+      audio.play().catch(() => resolve());
     });
 
     return performance.now() - start;
@@ -64,14 +81,11 @@ export async function runSwapIt(container, data, nav = {}) {
   async function playListenThenSpeak(audioSrc, speakDuration, cmdListenEl, cmdSpeakEl) {
     if (!audioSrc) return;
 
-    // LISTEN durante o áudio
     setCmdState(cmdListenEl, cmdSpeakEl, "listen");
     await playAudioOnly(audioSrc);
 
-    // desativa listen
     setCmdState(cmdListenEl, cmdSpeakEl, null);
 
-    // SPEAK pelo tempo de sia1
     setCmdState(cmdListenEl, cmdSpeakEl, "speak");
     await wait(speakDuration);
     setCmdState(cmdListenEl, cmdSpeakEl, null);
@@ -115,6 +129,19 @@ export async function runSwapIt(container, data, nav = {}) {
     return filtered[idx];
   }
 
+  function setFreezeImage() {
+    if (destroyed) return;
+
+    area1.innerHTML = "";
+
+    const freezeImg = document.createElement("img");
+    freezeImg.src = data.freezeImageSrc;
+    freezeImg.className = "exercise-swapit__freeze";
+    freezeImg.alt = "";
+
+    area1.appendChild(freezeImg);
+  }
+
   function resetVisualState() {
     btn1.textContent = data.si1;
     vocabImg.src = data.initialImageSrc;
@@ -122,27 +149,41 @@ export async function runSwapIt(container, data, nav = {}) {
     setCmdState(cmdListen, cmdSpeak, null);
   }
 
+  function updateOrientationState() {
+    if (destroyed) return;
+
+    const isMobile = window.innerWidth <= 900;
+    const isLandscape = window.innerWidth > window.innerHeight;
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    container.classList.toggle("is-mobile", isMobile);
+    container.classList.toggle("is-mobile-landscape", isMobile && isLandscape);
+    container.classList.toggle("is-mobile-portrait", isMobile && isPortrait);
+  }
+
   // ----------------------------
   // render shell
   // ----------------------------
-  container.innerHTML = "";
 
   const vocabLayout = document.createElement("div");
-  vocabLayout.className = "vocab-layout";
+  vocabLayout.className = "vocab-layout exercise-swapit__layout";
 
   const area1 = document.createElement("div");
-  area1.className = "area1";
+  area1.className = "area1 exercise-swapit__media";
 
   const area2 = document.createElement("div");
-  area2.className = "area2";
+  area2.className = "area2 exercise-swapit__stage";
 
   vocabLayout.appendChild(area1);
   vocabLayout.appendChild(area2);
   container.appendChild(vocabLayout);
 
+  // ----------------------------
   // AREA 1
+  // ----------------------------
+
   const video = vc.createVideoEl(data.videoSrc, {
-    className: "vocab-video",
+    className: "vocab-video exercise-swapit__video",
     muted: false,
     loop: false,
     playsInline: true
@@ -151,60 +192,33 @@ export async function runSwapIt(container, data, nav = {}) {
   area1.appendChild(video);
 
   vc.playToEnd(video, { autoplay: true })
-    .then(() => {
-      if (destroyed) return;
-      area1.innerHTML = "";
+    .then(setFreezeImage)
+    .catch(setFreezeImage);
 
-      const freezeImg = document.createElement("img");
-      freezeImg.src = data.freezeImageSrc;
-      freezeImg.className = "swapit-freeze-image";
-      freezeImg.style.width = "100%";
-      freezeImg.style.height = "100%";
-      freezeImg.style.objectFit = "cover";
-
-      area1.appendChild(freezeImg);
-    })
-    .catch(() => {
-      if (destroyed) return;
-      area1.innerHTML = "";
-
-      const freezeImg = document.createElement("img");
-      freezeImg.src = data.freezeImageSrc;
-      freezeImg.className = "swapit-freeze-image";
-      freezeImg.style.width = "100%";
-      freezeImg.style.height = "100%";
-      freezeImg.style.objectFit = "cover";
-
-      area1.appendChild(freezeImg);
-    });
-
+  // ----------------------------
   // AREA 2
+  // ----------------------------
+
   const stage = document.createElement("div");
-  stage.className = "stage bg-blue-30";
+  stage.className = "stage bg-blue-30 exercise-swapit__stagebg";
 
   const card = document.createElement("div");
-  card.className = "stage-card panel-white-50";
+  card.className = "stage-card panel-white-50 vocab-card exercise-swapit__card";
 
   const inner = document.createElement("div");
-  inner.className = "vocab-card swapit-card";
-  inner.style.display = "flex";
-  inner.style.flexDirection = "column";
-  inner.style.justifyContent = "flex-start";
-  inner.style.alignItems = "center";
-  inner.style.gap = "clamp(12px, 2vh, 24px)";
-  inner.style.paddingTop = "clamp(10px, 2vh, 24px)";
+  inner.className = "exercise-content exercise-swapit__content";
 
   const cmdBar = document.createElement("div");
-  cmdBar.className = "cmd-bar";
+  cmdBar.className = "cmd-bar exercise-swapit__cmdbar";
 
   const cmdListen = document.createElement("img");
   cmdListen.src = ICONS.listen;
-  cmdListen.className = "cmd-icon";
+  cmdListen.className = "cmd-icon exercise-swapit__cmdicon";
   cmdListen.alt = "Listen";
 
   const cmdSpeak = document.createElement("img");
   cmdSpeak.src = ICONS.speak;
-  cmdSpeak.className = "cmd-icon";
+  cmdSpeak.className = "cmd-icon exercise-swapit__cmdicon";
   cmdSpeak.alt = "Speak";
 
   cmdBar.appendChild(cmdListen);
@@ -212,48 +226,40 @@ export async function runSwapIt(container, data, nav = {}) {
 
   const btn1 = document.createElement("button");
   btn1.type = "button";
-  btn1.className = "btn1 swapit-btn";
+  btn1.className = "btn1 exercise-swapit__button";
   btn1.textContent = data.si1;
-  btn1.style.maxWidth = "min(92%, 900px)";
-  btn1.style.width = "fit-content";
-  btn1.style.whiteSpace = "normal";
-  btn1.style.textAlign = "center";
-  btn1.style.fontSize = "clamp(18px, 3.4vw, 34px)";
-  btn1.style.lineHeight = "1.15";
-  btn1.style.padding = "14px 18px";
 
   const vocabImg = document.createElement("img");
-  vocabImg.className = "swapit-image";
-  vocabImg.style.width = "min(42vmin, 340px)";
-  vocabImg.style.height = "min(42vmin, 340px)";
-  vocabImg.style.objectFit = "contain";
-  vocabImg.style.borderRadius = "20px";
-  vocabImg.style.pointerEvents = "none";
+  vocabImg.className = "exercise-swapit__image";
   vocabImg.alt = "";
   vocabImg.src = data.initialImageSrc;
 
   const navWrapper = document.createElement("div");
-  navWrapper.className = "vocab-nav exercise-nav";
+  navWrapper.className = "vocab-nav exercise-nav exercise-swapit__nav";
 
   const prevImg = document.createElement("img");
   prevImg.src = ICONS.prev;
-  prevImg.className = "nav-icon";
+  prevImg.className = "nav-icon exercise-swapit__navicon";
+  prevImg.alt = "Previous";
+
   if (nav.disablePrev || !nav.onPrev) {
     prevImg.classList.add("disabled");
   } else {
-    prevImg.onclick = () => {
+    prevImg.addEventListener("click", () => {
       if (destroyed) return;
       nav.onPrev();
-    };
+    });
   }
 
   const nextImg = document.createElement("img");
   nextImg.src = ICONS.next;
-  nextImg.className = "nav-icon disabled";
-  nextImg.onclick = () => {
+  nextImg.className = "nav-icon exercise-swapit__navicon disabled";
+  nextImg.alt = "Next";
+
+  nextImg.addEventListener("click", () => {
     if (destroyed || !nextUnlocked) return;
     if (typeof nav.onNext === "function") nav.onNext();
-  };
+  });
 
   navWrapper.appendChild(prevImg);
   navWrapper.appendChild(nextImg);
@@ -261,13 +267,17 @@ export async function runSwapIt(container, data, nav = {}) {
   inner.appendChild(cmdBar);
   inner.appendChild(btn1);
   inner.appendChild(vocabImg);
-  inner.appendChild(navWrapper);
 
   card.appendChild(inner);
+  card.appendChild(navWrapper);
   stage.appendChild(card);
   area2.appendChild(stage);
 
   setCmdState(cmdListen, cmdSpeak, null);
+
+  updateOrientationState();
+  window.addEventListener("resize", updateOrientationState);
+  window.addEventListener("orientationchange", updateOrientationState);
 
   const candidates = getCandidateIds(data.vocabSource || {});
 
@@ -276,31 +286,28 @@ export async function runSwapIt(container, data, nav = {}) {
     if (!pickedId) return false;
 
     lastPickedId = pickedId;
+
     const picked = catalog.resolveItem(pickedId);
     if (!picked) return false;
 
     const label = picked.label1_en || picked.label1 || picked.lemma || "";
 
-    // troca si1/sin e preenche imediatamente
     btn1.textContent = String(data.sin).replace("____", label);
-
-    // troca imagem
     vocabImg.src = picked.img;
     vocabImg.alt = label;
 
-    // toca audio_main do item + listen, depois speak por tempo de sia1
     await playListenThenSpeak(picked.audio, sia1Duration, cmdListen, cmdSpeak);
 
     return true;
   }
 
-  btn1.onclick = async () => {
+  btn1.addEventListener("click", async () => {
     if (destroyed || running) return;
+
     running = true;
     nextUnlocked = false;
     nextImg.classList.add("disabled");
 
-    // sempre volta ao estado inicial ao começar
     resetVisualState();
 
     // 1) toca sia1
@@ -325,11 +332,11 @@ export async function runSwapIt(container, data, nav = {}) {
       nextImg.classList.remove("disabled");
     }
 
-    // volta visualmente ao estado inicial, mas continua liberado para replay
+    // volta ao estado visual inicial
     resetVisualState();
 
     running = false;
-  };
+  });
 
   return cleanup;
 }
