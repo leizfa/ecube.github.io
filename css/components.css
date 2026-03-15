@@ -119,7 +119,6 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  padding: 14px 16px;
   text-align: center;
   user-select: none;
   display: inline-flex;
@@ -220,5 +219,371 @@
   .cmd-icon,
   .btn1 {
     transition: none !important;
+  }
+}
+
+/* =========================================
+   EXERCISES
+   ========================================= */
+
+   /* =========================
+   EXERCISE BASE
+========================= */
+
+.exercise-root {
+  width: 100%;
+  height: 100%;
+}
+
+.exercise-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
+   BUILD BLOCKS
+========================= */
+
+.exercise-buildblocks .exercise-buildblocks__card {
+  position: relative;
+  justify-content: flex-start;
+  padding-top: clamp(10px, 2vh, 24px);
+  padding-bottom: clamp(70px, 10vh, 140px);
+}
+
+.exercise-buildblocks .exercise-buildblocks__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.exercise-buildblocks .exercise-buildblocks__chunks {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 6px 0;
+}
+
+.exercise-buildblocks .exercise-buildblocks__frames {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.exercise-buildblocks .exercise-buildblocks__btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.1;
+  padding: 25px 30px;
+  font-size: clamp(20px, 6vw, 34px);
+}
+
+.exercise-buildblocks .exercise-buildblocks__btn--chunk {
+  flex: 0 1 auto;
+  padding: 20px 30px;
+}
+
+.exercise-buildblocks .exercise-buildblocks__btn--frame {
+  width: min(92%, 900px);
+  padding: 25px 30px;
+}
+
+.exercise-buildblocks .exercise-buildblocks__btn.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.exercise-buildblocks .exercise-buildblocks__btn.is-dimmed {
+  opacity: 0.3;
+}
+
+.exercise-buildblocks .exercise-buildblocks__btn.is-current {
+  opacity: 1;
+}
+
+.exercise-buildblocks .exercise-buildblocks__nav {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: clamp(12px, 3vh, 28px);
+  display: flex;
+  justify-content: center !important;
+  gap: clamp(100px, 40vw, 700px) !important;
+  padding: 0 clamp(32px, 7vw, 120px) !important;
+}
+
+/* =========================
+   MOBILE PORTRAIT
+========================= */
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .exercise-buildblocks .exercise-buildblocks__content {
+    gap: 8px;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__btn {
+    min-width: 120px;
+  }
+
+  .exercise-buildblocks .cmd-bar {
+    gap: 15px;
+  }
+}
+
+/* =========================
+   MOBILE LANDSCAPE
+========================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .exercise-buildblocks .exercise-buildblocks__card {
+    padding: 15px 10px 60px;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__content {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__cmdbar {
+    width: 100%;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 5px;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__cmdicon {
+    padding-top: 30px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__chunks {
+    gap: 10px;
+    margin: 5px 0;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__frames {
+    gap: 10px;
+    margin: 5px 0;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__btn {
+    padding: 10px 16px;
+    font-size: 16px;
+    min-height: 40px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__btn--chunk {
+    min-width: 100px;
+    width: auto;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__btn--frame {
+    width: 80%;
+    max-width: 300px;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__nav {
+    max-width: 250px;
+    margin: 10px auto 0;
+    gap: 120px !important;
+    padding: 0 20px !important;
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__navicon {
+    width: 40px;
+    height: 40px;
+    gap: 30px;
+    padding-bottom: clamp(40px, 10vh, 40px);
+  }
+
+  .exercise-buildblocks .exercise-buildblocks__stage {
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* =========================
+   EXERCISE BASE
+========================= */
+
+.exercise-root {
+  width: 100%;
+  height: 100%;
+}
+
+.exercise-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
+   SWAP IT
+========================= */
+
+.exercise-swapit .exercise-swapit__freeze {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exercise-swapit .exercise-swapit__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 10px 30px;
+}
+
+.exercise-swapit .exercise-swapit__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding-top: 0;
+  box-sizing: border-box;
+}
+
+.exercise-swapit .exercise-swapit__button {
+  max-width: min(92%, 900px);
+  width: fit-content;
+  white-space: normal;
+  text-align: center;
+  font-size: clamp(30px, 10vw, 60px);
+  line-height: 1.15;
+  padding: 14px 18px;
+}
+
+.exercise-swapit .exercise-swapit__image {
+  width: min(42vmin, 340px);
+  height: min(42vmin, 340px);
+  object-fit: contain;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.exercise-swapit .exercise-swapit__nav {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: clamp(12px, 3vh, 28px);
+  display: flex;
+  justify-content: center !important;
+  gap: clamp(100px, 40vw, 700px) !important;
+  padding: 0 clamp(32px, 7vw, 120px) !important;
+}
+
+/* =========================
+   MOBILE PORTRAIT
+========================= */
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .exercise-swapit .exercise-swapit__content {
+    padding: 15px 10px 60px;
+    padding-bottom: 15px;
+  }
+
+  .exercise-swapit .exercise-swapit__button {
+    max-width: min(86%, 540px);
+    font-size: 16px;
+    line-height: 1.15;
+    max-height: clamp(40px, 6vw, 60px);
+    padding: 10px 14px;
+  }
+
+  .exercise-swapit .exercise-swapit__image {
+    width: min(54vw, 300px);
+    height: min(54vw, 300px);
+  }
+
+.exercise-swapit .exercise-swapit__navicon {
+    padding-bottom: 30px;
+  }
+
+}
+
+/* =========================
+   MOBILE LANDSCAPE
+   foco principal do ajuste
+========================= */
+
+@media (max-height: 900px) and (orientation: landscape) {
+  .exercise-swapit .exercise-swapit__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 4px 8px 60px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    
+  }
+
+  .exercise-swapit .exercise-swapit__content {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    padding-top: 0;
+  }
+
+  .exercise-swapit .exercise-swapit__cmdbar {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 0;
+  }
+
+  .exercise-swapit .exercise-swapit__cmdicon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .exercise-swapit .exercise-swapit__button {
+    max-width: min(86%, 540px);
+    font-size: 16px;
+    line-height: 1.15;
+    padding: 10px 14px;
+  }
+
+  .exercise-swapit .exercise-swapit__image {
+    width: min(40vh, 230px);
+    height: min(40vh, 230px);
+  }
+
+  .exercise-swapit .exercise-swapit__nav {
+    max-width: 250px;
+    margin: 8px auto 0;
+    gap: 120px !important;
+    padding: 0 10px !important;
+  }
+
+  .exercise-swapit .exercise-swapit__navicon {
+    width: 36px;
+    height: 36px;
+    padding-bottom: 30px;
+  }
+
+ .exercise-swapit .exercise-swapit__stage {
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
   }
 }
